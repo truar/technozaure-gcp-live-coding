@@ -70,8 +70,8 @@ CMD ["java", "-jar", "/app.jar"]
 
 Test if your dockerfile works as expected
 ```shell script
-docker build -t gcr.io/tzp-20201206-297810/backend:latest .
-docker run -d -p 8080:8080 gcr.io/tzp-20201206-297810/backend:latest
+docker build -t gcr.io/tzp-20201207/backend:latest .
+docker run -d -p 8080:8080 gcr.io/tzp-20201207/backend:latest
 ```
 
 * Deploy the application onto Cloud Run
@@ -85,8 +85,9 @@ gcloud auth login
 * Create a new project
     * Explain what is a project: contains all resources of your GCP application. 
     * Show with the Cloud UI
+        * If done by the UI, don't forget to set the project default in the terminal `gcloud config set core/project tzp-20201207`
 ```shell script
-gcloud projects create tzp-20201206-297810 --set-as-default
+gcloud projects create tzp-20201207 --set-as-default
 ```
 
 * Now, deploy using gcloud CLI
@@ -120,7 +121,7 @@ spec:
       containerConcurrency: 80
       timeoutSeconds: 300
       containers:
-      - image: gcr.io/tzp-20201206-297810/backend:latest
+      - image: gcr.io/tzp-20201207/backend:latest
         resources:
           limits:
             cpu: 1000m
@@ -134,7 +135,7 @@ spec:
 ```shell script
 gcloud auth configure-docker
 gcloud services enable containerregistry.googleapis.com
-docker push gcr.io/tzp-20201206-297810/backend:latest
+docker push gcr.io/tzp-20201207/backend:latest
 ```
 
 5. Deploy to cloudRun and allow public access
@@ -203,7 +204,7 @@ yarn serve
 
 
 * Deploy the application on Firebase
-* Add the project tzp-20201206-297810 to Firebase using the UI
+* Add the project tzp-20201207 to Firebase using the UI
     * Add project by looking in Zenika projects if needed, but it should be proposed automatically
     * Quickly browse Firebase to see the features
         * Authentication
@@ -218,7 +219,7 @@ yarn serve
     
 * `firebase init`
     * Select `Hosting`
-    * Set the project ID: tzp-20201206-297810
+    * Set the project ID: tzp-20201207
     * dist as public folder
     * index.html a rewrite rule
 
