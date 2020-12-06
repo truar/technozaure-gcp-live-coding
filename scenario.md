@@ -342,4 +342,15 @@ images:
 gcloud builds submit . --substitutions SHORT_SHA=local
 ```
 
-* If build is success, then check the firebase and Cloud run interface
+* If build is success, then check the firebase website
+
+
+* Conclusion:
+    * Improves build time with cache
+    * Add security using Firebase Authentication
+    * CSRF
+    * Execute e2e tests on deployment, but not easy to create condition steps, needs to be done manually in Cloud Build
+    * Configure multiple environment
+        * Firebase many sites
+        * Cloud run services per environment
+        * Create 2 projects: staging + main for instance
