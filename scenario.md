@@ -243,6 +243,8 @@ yarn serve
 gcloud services enable cloudbuild.googleapis.com
 ```
 
+* Add the rights to deploy Cloud Run and change user to CloudBuild user
+
 * Synchronize your Github project with Cloud Source Repositories
     * Might be in error for quite a while, even if I don't know why... Give it a lot of tries... If it doesn't work, keep going with Cloud-build configuration file
 
@@ -281,7 +283,7 @@ steps:
         envsubst < cloudrun-backend.yaml > cloudrun-backend_with_env.yaml
         gcloud beta run services replace cloudrun-backend_with_env.yaml \
           --platform=managed --region=europe-west1
-        gcloud run services add-iam-policy-binding cloudrun-backend \
+        gcloud run services add-iam-policy-binding application-backend \
           --platform=managed --region=europe-west1 \
           --member="allUsers" --role="roles/run.invoker"
 

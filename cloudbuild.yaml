@@ -25,7 +25,7 @@ steps:
         envsubst < cloudrun-backend.yaml > cloudrun-backend_with_env.yaml
         gcloud beta run services replace cloudrun-backend_with_env.yaml \
           --platform=managed --region=europe-west1
-        gcloud run services add-iam-policy-binding cloudrun-backend \
+        gcloud run services add-iam-policy-binding application-backend \
           --platform=managed --region=europe-west1 \
           --member="allUsers" --role="roles/run.invoker"
 
