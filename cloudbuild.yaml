@@ -45,7 +45,7 @@ steps:
 
   - id: 'deploy-firebase'
     waitFor: [ 'build-front' ]
-    name: gcr.io/truaro-resources/firebase
+    name: gcr.io/$PROJECT_ID/firebase
     dir: frontend
     args: [ 'deploy', '--project=$PROJECT_ID', '--only', 'hosting' ]
 

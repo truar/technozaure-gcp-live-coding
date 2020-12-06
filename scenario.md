@@ -252,6 +252,12 @@ gcloud services enable cloudbuild.googleapis.com
     * name: tzp-livecoding-trigger
     * description: don't care
     * branch: .* (select all)
+    
+* Create and import a Firebase image using some command line
+```shell script
+cd ../cloud-builders-community/firebase
+gcloud builds submit .
+```
    
 * Create the `cloudbuild.yaml` file
 ```yaml
