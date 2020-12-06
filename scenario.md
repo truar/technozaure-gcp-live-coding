@@ -252,8 +252,7 @@ gcloud services enable cloudbuild.googleapis.com
     * name: tzp-livecoding-trigger
     * description: don't care
     * branch: .* (select all)
-    
-    
+   
 * Create the `cloudbuild.yaml` file
 ```yaml
 steps:
@@ -331,3 +330,10 @@ images:
 ```
 
 * Commit and push your changes
+
+* If it didn't work as expected, use `gcloud` CLI to easily try your modification:
+```shell script
+gcloud builds submit . --substitutions SHORT_SHA=local
+```
+
+* If build is success, then check the firebase and Cloud run interface
