@@ -1,0 +1,24 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: application-backend
+  labels:
+    cloud.googleapis.com/location: europe-west1
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/maxScale: '3'
+    spec:
+      serviceAccountName: backend-account
+      containerConcurrency: 80
+      timeoutSeconds: 300
+      containers:
+      - image: gcr.io/${PROJECT_ID}/backend:${IMAGE_VERSION}
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 256Mi
+  traffic:
+    - percent: 100
+      latestRevision: true

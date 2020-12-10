@@ -1,0 +1,35 @@
+steps:
+  - id: 'dockerize-project'
+    name: gcr.io/cloud-builders/docker
+    dir: backend
+    args: [ 'build',
+            '-t', 'gcr.io/$PROJECT_ID/backend:$SHORT_SHA',
+            '-t', 'gcr.io/$PROJECT_ID/backend:latest',
+            '.' ]
+
+  - id: 'push-to-cloud-registry'
+    name: gcr.io/cloud-builders/docker
+    args: [ 'push', 'gcr.io/$PROJECT_ID/backend:$SHORT_SHA' ]
+
+  - id: 'deploy-cloud-run'
+    name: gcr.io/cloud-builders/gcloud
+    dir: backend
+    entrypoint: bash
+    args:
+      - '-c'
+      - |
+        apt-get update
+        apt-get install -qq -y gettext
+        export PROJECT_ID=$PROJECT_ID
+        export IMAGE_VERSION=$SHORT_SHA
+        envsubst < cloudrun-backend.yaml > cloudrun-backend_with_env.yaml
+        gcloud beta run services replace cloudrun-backend_with_env.yaml \
+                  --platform=managed --region=europe-west1
+        gcloud run services add-iam-policy-binding application-backend \
+                  --platform=managed --region=europe-west1 \
+                  --member="allUsers" --role="roles/run.invoker"
+
+
+images:
+  - 'gcr.io/$PROJECT_ID/backend:$SHORT_SHA'
+  - 'gcr.io/$PROJECT_ID/backend:latest'
